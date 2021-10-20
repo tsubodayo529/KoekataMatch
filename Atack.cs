@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Atack : MonoBehaviour
 {
-    public GameObject bulletPrefab;
+    public GameObject bulletPrefabCube;
+    public GameObject bulletPrefabSphere;
     public float shotPower;
     public Transform shotPos;
     
@@ -17,12 +18,26 @@ public class Atack : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.H)){
-            Shot();
+            ShotCube();
+        }
+        else if(Input.GetKeyDown(KeyCode.J))
+        {
+            ShotSphere();
         }
     }
 
-    public void Shot(){
-        GameObject bullet =  Instantiate(bulletPrefab);
+//Hを押すと珠を打ち出す処理１
+    public void ShotCube(){
+        GameObject bullet =  Instantiate(bulletPrefabCube);
+        bullet.transform.position = shotPos.position;
+        Rigidbody rigid = bullet.GetComponent<Rigidbody>();
+        Vector3 front = shotPos.transform.forward;
+        rigid.AddForce(front * shotPower, ForceMode.Impulse);
+    }
+
+//Jを押すと珠を打ち出す処理２
+    public void ShotSphere(){
+        GameObject bullet =  Instantiate(bulletPrefabSphere);
         bullet.transform.position = shotPos.position;
         Rigidbody rigid = bullet.GetComponent<Rigidbody>();
         Vector3 front = shotPos.transform.forward;
